@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>福利吧论坛 - 自动签到控制台</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🎯</span>
+                    <h1>福利吧签到</h1>
+                </div>
+                <div class="header-status">
+                    <span id="connectionStatus" class="status-badge checking">检测中...</span>
+                </div>
+            </div>
+            <p class="subtitle">自动签到 · 定时执行 · 微信推送</p>
+        </header>
+
+        <!-- 主内容 -->
+        <main>
+            <!-- 配置区域 -->
+            <section class="card config-card">
+                <div class="card-header">
+                    <h2>⚙️ 配置管理</h2>
+                    <button id="toggleConfigBtn" class="btn-icon" title="收起/展开">−</button>
+                </div>
+                <div id="configBody" class="card-body">
+                    <!-- 论坛账号 -->
+                    <div class="form-group">
+                        <label for="usernameInput">论坛账号</label>
+                        <input 
+                            type="text" 
+                            id="usernameInput" 
+                            placeholder="请输入福利吧论坛账号"
+                            autocomplete="username"
+                        />
+                    </div>
+
+                    <!-- 论坛密码 -->
+                    <div class="form-group">
+                        <label for="passwordInput">论坛密码</label>
+                        <div class="password-wrapper">
+                            <input 
+                                type="password" 
+                                id="passwordInput" 
+                                placeholder="请输入论坛密码"
+                                autocomplete="current-password"
+                            />
+                            <button type="button" id="togglePasswordBtn" class="btn-eye">👁️</button>
+                        </div>
+                    </div>
+
+                    <!-- 签到时间 -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checkinTimeInput">签到时间</label>
+                            <input type="time" id="checkinTimeInput" value="09:00" />
+                            <span class="hint">每天自动签到</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewTimeInput">复查时间</label>
+                            <input type="time" id="reviewTimeInput" value="22:00" />
+                            <span class="hint">每天自动复查</span>
+                        </div>
+                    </div>
+
+                    <!-- 推送配置 -->
+                    <div class="divider"></div>
+                    <h3>📱 推送通知</h3>
+                    <div class="form-group">
+                        <label for="pushplusInput">PushPlus Token</label>
+                        <input 
+                            type="text" 
+                            id="pushplusInput" 
+                            placeholder="请输入 PushPlus Token（可选）"
+                        />
+                        <span class="hint">用于微信推送签到结果</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="serverchanInput">Server酱 Key</label>
+                        <input 
+                            type="text" 
+                            id="serverchanInput" 
+                            placeholder="请输入 Server酱 Key（可选）"
+                        />
+                        <span class="hint">备用推送通道</span>
+                    </div>
+
+                    <!-- 操作按钮 -->
+                    <div class="form-actions">
+                        <button id="saveConfigBtn" class="btn-primary">💾 保存配置</button>
+                        <button id="testNotifyBtn" class="btn-secondary">📨 测试推送</button>
+                    </div>
+
+                    <!-- 配置状态 -->
+                    <div id="configStatus" class="status-message hidden"></div>
+                </div>
+            </section>
+
+            <!-- 签到控制 -->
+            <section class="card control-card">
+                <div class="card-header">
+                    <h2>🚀 签到控制</h2>
+                </div>
+                <div class="card-body">
+                    <div class="control-row">
+                        <button id="checkinNowBtn" class="btn-success">✅ 立即签到</button>
+                        <button id="refreshStatusBtn" class="btn-secondary">🔄 刷新状态</button>
+                        <button id="resetCookieBtn" class="btn-danger">🔑 重置Cookie</button>
+                    </div>
+
+                    <!-- 今日状态 -->
+                    <div id="todayStatus" class="today-status">
+                        <div class="status-placeholder">点击"刷新状态"查看今日签到情况</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 签到记录 -->
+            <section class="card history-card">
+                <div class="card-header">
+                    <h2>📊 签到记录</h2>
+                    <div class="card-actions">
+                        <button id="refreshHistoryBtn" class="btn-icon" title="刷新">🔄</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="historyList" class="history-list">
+                        <div class="empty-state">暂无签到记录</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部 -->
+        <footer class="footer">
+            <p>数据存储在 Cloudflare KV，安全加密</p>
+            <p>
+                <a href="#" id="clearLocalBtn">清除本地缓存</a>
+                ·
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
