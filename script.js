@@ -4,7 +4,7 @@
  */
 
 // ========== 配置 ==========
-const API_BASE = '/api'; // Worker API 地址
+const API_BASE = 'https://wkk.sryze.cc/api/api'; // Worker API 地址
 const STORAGE_KEY = 'wnflb_config';
 
 // ========== DOM 引用 ==========
